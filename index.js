@@ -11,7 +11,9 @@ function f1(limit, list) {
   console.log(acc);
 }
 
-f1(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+// f1(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+const { L, C } = window._;
 
 function f2(limit, list) {
   let acc = 0;
@@ -23,7 +25,6 @@ function f2(limit, list) {
       if (--limit === 0) break;
     }
   }
-  console.log("acc1", acc);
 }
 
 f2(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
