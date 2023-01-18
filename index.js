@@ -63,7 +63,13 @@ function f3(end) {
 // f3(10);
 
 function f4(end) {
-  _.each(console.log, L.range(1, end, 2)); // 홀수만 출력
+  // _.each(console.log, L.range(1, end, 2)); // 홀수만 출력
+  _.go(L.range(1, end, 2), _.each(console.log));
+
+  // 함수를 실행했는데 전달한 인자와 같은 값이 입력과 출력값이 같다는 것은,
+  // 함수를 실행하지 않은 것과 같기 때문에 효과를 일으킨다는게 명확하다
+
+  // each라는 함수를 사용된다면 그 곳에는 반드시 부수 효과가 있음
 }
 f4(10);
 
