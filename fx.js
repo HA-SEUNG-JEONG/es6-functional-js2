@@ -20,7 +20,12 @@
     });
     /******/
     /******/ // Execute the module function
-    /******/ modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+    /******/ modules[moduleId].call(
+      module.exports,
+      module,
+      module.exports,
+      __webpack_require__
+    );
     /******/
     /******/ // Flag the module as loaded
     /******/ module.l = true;
@@ -40,7 +45,10 @@
   /******/ // define getter function for harmony exports
   /******/ __webpack_require__.d = function (exports, name, getter) {
     /******/ if (!__webpack_require__.o(exports, name)) {
-      /******/ Object.defineProperty(exports, name, { enumerable: true, get: getter });
+      /******/ Object.defineProperty(exports, name, {
+        enumerable: true,
+        get: getter,
+      });
       /******/
     }
     /******/
@@ -49,7 +57,9 @@
   /******/ // define __esModule on exports
   /******/ __webpack_require__.r = function (exports) {
     /******/ if (typeof Symbol !== "undefined" && Symbol.toStringTag) {
-      /******/ Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+      /******/ Object.defineProperty(exports, Symbol.toStringTag, {
+        value: "Module",
+      });
       /******/
     }
     /******/ Object.defineProperty(exports, "__esModule", { value: true });
@@ -64,10 +74,19 @@
   /******/ __webpack_require__.t = function (value, mode) {
     /******/ if (mode & 1) value = __webpack_require__(value);
     /******/ if (mode & 8) return value;
-    /******/ if (mode & 4 && typeof value === "object" && value && value.__esModule) return value;
+    /******/ if (
+      mode & 4 &&
+      typeof value === "object" &&
+      value &&
+      value.__esModule
+    )
+      return value;
     /******/ var ns = Object.create(null);
     /******/ __webpack_require__.r(ns);
-    /******/ Object.defineProperty(ns, "default", { enumerable: true, value: value });
+    /******/ Object.defineProperty(ns, "default", {
+      enumerable: true,
+      value: value,
+    });
     /******/ if (mode & 2 && typeof value != "string")
       for (var key in value)
         __webpack_require__.d(
@@ -235,7 +254,9 @@
       // CONCATENATED MODULE: ./toIter.js
 
       function toIter(iterable) {
-        return iterable && iterable[Symbol.iterator] ? iterable[Symbol.iterator]() : empty;
+        return iterable && iterable[Symbol.iterator]
+          ? iterable[Symbol.iterator]()
+          : empty;
       }
       // CONCATENATED MODULE: ./nop.js
       const nop = Symbol.for("nop");
@@ -283,7 +304,8 @@
 
       function reduce(f, acc, iter) {
         if (arguments.length == 1) return (..._) => reduce(f, ..._);
-        if (arguments.length == 2) return reduce(f, head((iter = toIter(acc))), iter);
+        if (arguments.length == 2)
+          return reduce(f, head((iter = toIter(acc))), iter);
 
         iter = toIter(iter);
         return go1(acc, function recur(acc) {
@@ -333,11 +355,16 @@
           ? baseSortBy(left, right, (a) => a[f], arr)
           : f.length == 2
           ? [...arr].sort(right == -1 ? pipe(f, (n) => n * -1) : f)
-          : [...arr].sort((a, b, fa = f(a), fb = f(b)) => (fa == fb ? 0 : fa < fb ? left : right));
+          : [...arr].sort((a, b, fa = f(a), fb = f(b)) =>
+              fa == fb ? 0 : fa < fb ? left : right
+            );
       }
       // CONCATENATED MODULE: ./sortByDesc.js
 
-      /* harmony default export */ var sortByDesc_0 = curry(function sortByDesc(f, arr) {
+      /* harmony default export */ var sortByDesc_0 = curry(function sortByDesc(
+        f,
+        arr
+      ) {
         return baseSortBy(1, -1, f, arr);
       });
       // CONCATENATED MODULE: ./sortDesc.js
@@ -368,7 +395,8 @@
 
       function reduceS(f, acc, iter) {
         if (arguments.length == 1) return (..._) => reduceS(f, ..._);
-        if (arguments.length == 2) return reduceS(f, head((iter = toIter(acc))), iter);
+        if (arguments.length == 2)
+          return reduceS(f, head((iter = toIter(acc))), iter);
 
         iter = toIter(iter);
         return go1(acc, function recur(acc) {
@@ -414,13 +442,16 @@
       }
       // CONCATENATED MODULE: ./Lazy/filterLazy.js
 
-      /* harmony default export */ var Lazy_filterLazy = curry(function* filterLazy(f, iter) {
-        for (const a of safety(iter)) {
-          const b = go1(a, f);
-          if (b instanceof Promise) yield b.then((b) => (b ? a : Promise.reject(nop_0)));
-          else if (b) yield a;
+      /* harmony default export */ var Lazy_filterLazy = curry(
+        function* filterLazy(f, iter) {
+          for (const a of safety(iter)) {
+            const b = go1(a, f);
+            if (b instanceof Promise)
+              yield b.then((b) => (b ? a : Promise.reject(nop_0)));
+            else if (b) yield a;
+          }
         }
-      });
+      );
       // CONCATENATED MODULE: ./find.js
 
       /* harmony default export */ var find_0 = curry(function find(f, iter) {
@@ -432,9 +463,11 @@
       }
       // CONCATENATED MODULE: ./Lazy/rejectLazy.js
 
-      /* harmony default export */ var Lazy_rejectLazy = curry(function rejectLazy(f, iter) {
-        return Lazy_filterLazy((a) => go1(f(a), not), iter);
-      });
+      /* harmony default export */ var Lazy_rejectLazy = curry(
+        function rejectLazy(f, iter) {
+          return Lazy_filterLazy((a) => go1(f(a), not), iter);
+        }
+      );
       // CONCATENATED MODULE: ./take1.js
 
       const take1 = take_0(1);
@@ -443,7 +476,10 @@
       // CONCATENATED MODULE: ./every.js
 
       /* harmony default export */ var every_0 = curry(function every(f, iter) {
-        return go1(take1_0(Lazy_rejectLazy(f, iter)), ({ length }) => length == 0);
+        return go1(
+          take1_0(Lazy_rejectLazy(f, iter)),
+          ({ length }) => length == 0
+        );
       });
       // CONCATENATED MODULE: ./Lazy/entriesLazy.js
       function* entriesLazy(obj) {
@@ -451,7 +487,10 @@
       }
       // CONCATENATED MODULE: ./isMatch.js
 
-      /* harmony default export */ var isMatch_0 = curry(function isMatch(a, b) {
+      /* harmony default export */ var isMatch_0 = curry(function isMatch(
+        a,
+        b
+      ) {
         return typeof a == "function"
           ? !!a(b)
           : isArray_0(a) && isArray_0(b)
@@ -480,7 +519,9 @@
         }
 
         function _case(f) {
-          cbs.push({ _case: typeof f == "function" ? pipe(...arguments) : isMatch_0(f) });
+          cbs.push({
+            _case: typeof f == "function" ? pipe(...arguments) : isMatch_0(f),
+          });
           return _body;
         }
         _case.case = _case;
@@ -492,7 +533,9 @@
 
         _case.else = function () {
           _case((_) => true)(...arguments);
-          return targets ? evl() : (...targets2) => ((targets = targets2), evl());
+          return targets
+            ? evl()
+            : (...targets2) => ((targets = targets2), evl());
         };
 
         return _case;
@@ -541,7 +584,10 @@
         return parent;
       }
 
-      /* harmony default export */ var groupBy_0 = curry(function groupBy(f, iter) {
+      /* harmony default export */ var groupBy_0 = curry(function groupBy(
+        f,
+        iter
+      ) {
         return reduce((group, a) => pushSel(group, f(a), a), {}, iter);
       });
       // CONCATENATED MODULE: ./tap.js
@@ -570,7 +616,10 @@
       }
       // CONCATENATED MODULE: ./Lazy/mapLazy.js
 
-      /* harmony default export */ var Lazy_mapLazy = curry(function* mapLazy(f, iter) {
+      /* harmony default export */ var Lazy_mapLazy = curry(function* mapLazy(
+        f,
+        iter
+      ) {
         for (const a of safety(iter)) yield go1(a, f);
       });
       // CONCATENATED MODULE: ./map.js
@@ -590,7 +639,10 @@
         return parent;
       }
 
-      /* harmony default export */ var countBy_0 = curry(function countBy(f, iter) {
+      /* harmony default export */ var countBy_0 = curry(function countBy(
+        f,
+        iter
+      ) {
         return reduce((counts, a) => incSel(counts, f(a)), {}, iter);
       });
       // CONCATENATED MODULE: ./Lazy/keysLazy.js
@@ -624,7 +676,11 @@
         return go(
           iter,
           isObj ? entriesLazy : identity,
-          Lazy_filterLazy(pipe(isObj ? last : identity, f, (b) => (s.has(b) ? false : s.add(b)))),
+          Lazy_filterLazy(
+            pipe(isObj ? last : identity, f, (b) =>
+              s.has(b) ? false : s.add(b)
+            )
+          ),
           isObj ? object_object : takeAll
         );
       });
@@ -637,7 +693,10 @@
       }
       // CONCATENATED MODULE: ./indexBy.js
 
-      /* harmony default export */ var indexBy_0 = curry(function indexBy(f, iter) {
+      /* harmony default export */ var indexBy_0 = curry(function indexBy(
+        f,
+        iter
+      ) {
         return reduce((obj, a) => ((obj[f(a)] = a), obj), {}, iter);
       });
       // CONCATENATED MODULE: ./min.js
@@ -676,7 +735,10 @@
       }
       // CONCATENATED MODULE: ./takeWhile.js
 
-      /* harmony default export */ var takeWhile_0 = curry(function takeWhile(f, iter) {
+      /* harmony default export */ var takeWhile_0 = curry(function takeWhile(
+        f,
+        iter
+      ) {
         let res = [];
         iter = toIter(iter);
         return (function recur() {
@@ -697,15 +759,18 @@
       });
       // CONCATENATED MODULE: ./Lazy/mapEntriesLazy.js
 
-      /* harmony default export */ var Lazy_mapEntriesLazy = curry(function* mapEntriesLazy(
+      /* harmony default export */ var Lazy_mapEntriesLazy = curry(
+        function* mapEntriesLazy(f, iter) {
+          for (const [k, a] of safety(iter))
+            yield go1(go1(a, f), (b) => [k, b]);
+        }
+      );
+      // CONCATENATED MODULE: ./mapEntries.js
+
+      /* harmony default export */ var mapEntries_0 = curry(function mapEntries(
         f,
         iter
       ) {
-        for (const [k, a] of safety(iter)) yield go1(go1(a, f), (b) => [k, b]);
-      });
-      // CONCATENATED MODULE: ./mapEntries.js
-
-      /* harmony default export */ var mapEntries_0 = curry(function mapEntries(f, iter) {
         return takeAll(Lazy_mapEntriesLazy(f, iter));
       });
       // CONCATENATED MODULE: ./negate.js
@@ -716,7 +781,10 @@
       // CONCATENATED MODULE: ./some.js
 
       /* harmony default export */ var some_0 = curry(function some(f, iter) {
-        return go1(take1_0(Lazy_filterLazy(f, iter)), ({ length }) => length == 1);
+        return go1(
+          take1_0(Lazy_filterLazy(f, iter)),
+          ({ length }) => length == 1
+        );
       });
       // CONCATENATED MODULE: ./Lazy/flatLazy.js
 
@@ -740,11 +808,17 @@
             } else if (cur.value instanceof Promise) {
               return {
                 value: cur.value.then((value) => {
-                  if (iterStack.length > depth || !isIterable(value) || typeof value == "string")
+                  if (
+                    iterStack.length > depth ||
+                    !isIterable(value) ||
+                    typeof value == "string"
+                  )
                     return value;
                   const iter = value[Symbol.iterator](),
                     cur = iter.next();
-                  return cur.done ? Promise.reject(nop_0) : (iterStack.push(iter), cur.value);
+                  return cur.done
+                    ? Promise.reject(nop_0)
+                    : (iterStack.push(iter), cur.value);
                 }),
                 done: false,
               };
@@ -774,7 +848,10 @@
       }
       // CONCATENATED MODULE: ./findWhere.js
 
-      /* harmony default export */ var findWhere_0 = curry(function findWhere(w, iter) {
+      /* harmony default export */ var findWhere_0 = curry(function findWhere(
+        w,
+        iter
+      ) {
         return find_0(isMatch_0(w), iter);
       });
       // CONCATENATED MODULE: ./baseSel.js
@@ -802,14 +879,17 @@
         });
       // CONCATENATED MODULE: ./sortBy.js
 
-      /* harmony default export */ var sortBy_0 = curry(function sortBy(f, arr) {
+      /* harmony default export */ var sortBy_0 = curry(function sortBy(
+        f,
+        arr
+      ) {
         return baseSortBy(-1, 1, f, arr);
       });
       // CONCATENATED MODULE: ./each.js
 
       /* harmony default export */ var each_0 = curry(function each(f, iter) {
         return go1(
-          reduce((_, a) => f(a), null, iter),
+          reduce((_, a) => f(a), nulsl, iter),
           (_) => iter
         );
       });
@@ -820,7 +900,10 @@
       }
       // CONCATENATED MODULE: ./filter.js
 
-      /* harmony default export */ var filter_0 = curry(function filter(f, iter) {
+      /* harmony default export */ var filter_0 = curry(function filter(
+        f,
+        iter
+      ) {
         return takeAll(Lazy_filterLazy(f, iter));
       });
       // CONCATENATED MODULE: ./sort.js
@@ -842,7 +925,10 @@
       });
       // CONCATENATED MODULE: ./flatMap.js
 
-      /* harmony default export */ var flatMap_0 = curry(function flatMap(f, iter) {
+      /* harmony default export */ var flatMap_0 = curry(function flatMap(
+        f,
+        iter
+      ) {
         return flat(map_0(f, iter));
       });
       // CONCATENATED MODULE: ./string.js
@@ -854,12 +940,18 @@
       }
       // CONCATENATED MODULE: ./strMap.js
 
-      /* harmony default export */ var strMap_0 = curry(function strMap(f, iter) {
+      /* harmony default export */ var strMap_0 = curry(function strMap(
+        f,
+        iter
+      ) {
         return string(Lazy_mapLazy(f, iter));
       });
       // CONCATENATED MODULE: ./reject.js
 
-      /* harmony default export */ var reject_0 = curry(function reject(f, iter) {
+      /* harmony default export */ var reject_0 = curry(function reject(
+        f,
+        iter
+      ) {
         return filter_0((a) => go1(f(a), not), iter);
       });
       // CONCATENATED MODULE: ./pick.js
@@ -869,10 +961,14 @@
       });
       // CONCATENATED MODULE: ./Lazy/dropLazy.js
 
-      /* harmony default export */ var Lazy_dropLazy = curry(function* dropLazy(l, iter) {
+      /* harmony default export */ var Lazy_dropLazy = curry(function* dropLazy(
+        l,
+        iter
+      ) {
         if (l < 1) return yield* safety(iter);
         for (const a of safety(iter)) {
-          if (a instanceof Promise) yield a.then((a) => (l ? (l--, Promise.reject(nop_0)) : a));
+          if (a instanceof Promise)
+            yield a.then((a) => (l ? (l--, Promise.reject(nop_0)) : a));
           else if (l) {
             l--;
             continue;
@@ -933,7 +1029,10 @@
       /* harmony default export */ var baseCalls_0 = baseCalls;
       // CONCATENATED MODULE: ./calls.js
 
-      /* harmony default export */ var calls_0 = baseCalls_0(map_0, object_object);
+      /* harmony default export */ var calls_0 = baseCalls_0(
+        map_0,
+        object_object
+      );
       // CONCATENATED MODULE: ./delay.js
 
       /* harmony default export */ var delay = curry(function delay(time, a) {
@@ -941,7 +1040,10 @@
       });
       // CONCATENATED MODULE: ./mapObject.js
 
-      /* harmony default export */ var mapObject_0 = curry(function mapObject(f, obj) {
+      /* harmony default export */ var mapObject_0 = curry(function mapObject(
+        f,
+        obj
+      ) {
         return object_object(Lazy_mapEntriesLazy(f, entriesLazy(obj)));
       });
       // CONCATENATED MODULE: ./promiseAllObject.js
@@ -969,14 +1071,19 @@
       }
       // CONCATENATED MODULE: ./dropRight.js
 
-      /* harmony default export */ var dropRight = curry(function drop(l, iter) {
+      /* harmony default export */ var dropRight = curry(function drop(
+        l,
+        iter
+      ) {
         return go1(takeAll(iter), (arr) => take_0(arr.length - l, arr));
       });
       // CONCATENATED MODULE: ./Lazy/flatMapLazy.js
 
-      /* harmony default export */ var Lazy_flatMapLazy = curry(function flatMapLazy(f, iter) {
-        return flatLazy(Lazy_mapLazy(f, iter));
-      });
+      /* harmony default export */ var Lazy_flatMapLazy = curry(
+        function flatMapLazy(f, iter) {
+          return flatLazy(Lazy_mapLazy(f, iter));
+        }
+      );
       // CONCATENATED MODULE: ./Lazy/headTailLazy.js
 
       function headTailLazy(iter) {
@@ -995,7 +1102,10 @@
       }
       // CONCATENATED MODULE: ./Lazy/takeLazy.js
 
-      /* harmony default export */ var Lazy_takeLazy = curry(function* takeLazy(l, iter) {
+      /* harmony default export */ var Lazy_takeLazy = curry(function* takeLazy(
+        l,
+        iter
+      ) {
         if (l < 1) return;
         for (const a of safety(iter)) {
           if (a instanceof Promise) yield a.then((a) => (--l, a));
@@ -1005,27 +1115,31 @@
       });
       // CONCATENATED MODULE: ./Lazy/takeWhileLazy.js
 
-      /* harmony default export */ var Lazy_takeWhileLazy = curry(function* takeWhileLazy(f, iter) {
-        let ok = false;
-        for (const a of safety(iter)) {
-          ok = go1(a, f);
-          if (ok instanceof Promise)
-            yield ok.then((_ok) => ((ok = _ok) ? a : Promise.reject(nop_0)));
-          else if (ok) yield a;
-          if (!ok) break;
+      /* harmony default export */ var Lazy_takeWhileLazy = curry(
+        function* takeWhileLazy(f, iter) {
+          let ok = false;
+          for (const a of safety(iter)) {
+            ok = go1(a, f);
+            if (ok instanceof Promise)
+              yield ok.then((_ok) => ((ok = _ok) ? a : Promise.reject(nop_0)));
+            else if (ok) yield a;
+            if (!ok) break;
+          }
         }
-      });
+      );
       // CONCATENATED MODULE: ./Lazy/takeUntilLazy.js
 
-      /* harmony default export */ var Lazy_takeUntilLazy = curry(function* takeUntilLazy(f, iter) {
-        let ok = false;
-        for (const a of safety(iter)) {
-          ok = go1(a, f);
-          if (ok instanceof Promise) yield ok.then((_ok) => ((ok = _ok), a));
-          else yield a;
-          if (ok) break;
+      /* harmony default export */ var Lazy_takeUntilLazy = curry(
+        function* takeUntilLazy(f, iter) {
+          let ok = false;
+          for (const a of safety(iter)) {
+            ok = go1(a, f);
+            if (ok instanceof Promise) yield ok.then((_ok) => ((ok = _ok), a));
+            else yield a;
+            if (ok) break;
+          }
         }
-      });
+      );
       // CONCATENATED MODULE: ./Lazy/intervalLazy.js
 
       function intervalLazy(time) {
@@ -1067,14 +1181,19 @@
 
       // CONCATENATED MODULE: ./Concurrency/catchNoop.js
       function catchNoop(arr) {
-        arr.forEach((a) => (a instanceof Promise ? a.catch(function () {}) : a));
+        arr.forEach((a) =>
+          a instanceof Promise ? a.catch(function () {}) : a
+        );
         return arr;
       }
 
       /* harmony default export */ var Concurrency_catchNoop = catchNoop;
       // CONCATENATED MODULE: ./Concurrency/dropC.js
 
-      /* harmony default export */ var Concurrency_dropC = curry(function dropC(l, iter) {
+      /* harmony default export */ var Concurrency_dropC = curry(function dropC(
+        l,
+        iter
+      ) {
         return drop_0(l, Concurrency_catchNoop([...iter]));
       });
       // CONCATENATED MODULE: ./Concurrency/tailC.js
@@ -1084,14 +1203,19 @@
       }
       // CONCATENATED MODULE: ./Concurrency/reduceC.js
 
-      /* harmony default export */ var Concurrency_reduceC = curry(function reduceC(f, acc, iter) {
-        return arguments.length == 2
-          ? reduce(f, Concurrency_catchNoop([...acc]))
-          : reduce(f, acc, Concurrency_catchNoop([...iter]));
-      });
+      /* harmony default export */ var Concurrency_reduceC = curry(
+        function reduceC(f, acc, iter) {
+          return arguments.length == 2
+            ? reduce(f, Concurrency_catchNoop([...acc]))
+            : reduce(f, acc, Concurrency_catchNoop([...iter]));
+        }
+      );
       // CONCATENATED MODULE: ./Concurrency/takeC.js
 
-      /* harmony default export */ var Concurrency_takeC = curry(function takeC(l, iter) {
+      /* harmony default export */ var Concurrency_takeC = curry(function takeC(
+        l,
+        iter
+      ) {
         return take_0(l, Concurrency_catchNoop([...iter]));
       });
       // CONCATENATED MODULE: ./Concurrency/takeAllC.js
@@ -1099,12 +1223,11 @@
       /* harmony default export */ var takeAllC = Concurrency_takeC(Infinity);
       // CONCATENATED MODULE: ./Concurrency/mapEntriesC.js
 
-      /* harmony default export */ var Concurrency_mapEntriesC = curry(async function mapEntriesC(
-        f,
-        iter
-      ) {
-        return takeAllC(Lazy_mapEntriesLazy(f, iter));
-      });
+      /* harmony default export */ var Concurrency_mapEntriesC = curry(
+        async function mapEntriesC(f, iter) {
+          return takeAllC(Lazy_mapEntriesLazy(f, iter));
+        }
+      );
       // CONCATENATED MODULE: ./Concurrency/headC.js
 
       function headC(iter) {
@@ -1112,12 +1235,18 @@
       }
       // CONCATENATED MODULE: ./Concurrency/findC.js
 
-      /* harmony default export */ var Concurrency_findC = curry(function findC(f, iter) {
+      /* harmony default export */ var Concurrency_findC = curry(function findC(
+        f,
+        iter
+      ) {
         return headC(Lazy_filterLazy(f, iter));
       });
       // CONCATENATED MODULE: ./Concurrency/mapC.js
 
-      /* harmony default export */ var Concurrency_mapC = curry(function mapC(f, iter) {
+      /* harmony default export */ var Concurrency_mapC = curry(function mapC(
+        f,
+        iter
+      ) {
         return takeAllC(Lazy_mapLazy(f, iter));
       });
       // CONCATENATED MODULE: ./Concurrency/take1C.js
@@ -1125,26 +1254,46 @@
       /* harmony default export */ var take1C = Concurrency_takeC(1);
       // CONCATENATED MODULE: ./Concurrency/everyC.js
 
-      /* harmony default export */ var Concurrency_everyC = curry(function everyC(f, iter) {
-        return go1(take1C(Lazy_rejectLazy(f, iter)), ({ length }) => length == 0);
-      });
+      /* harmony default export */ var Concurrency_everyC = curry(
+        function everyC(f, iter) {
+          return go1(
+            take1C(Lazy_rejectLazy(f, iter)),
+            ({ length }) => length == 0
+          );
+        }
+      );
       // CONCATENATED MODULE: ./Concurrency/filterC.js
 
-      /* harmony default export */ var Concurrency_filterC = curry(function filterC(f, iter) {
-        return takeAllC(Lazy_filterLazy(f, iter));
-      });
+      /* harmony default export */ var Concurrency_filterC = curry(
+        function filterC(f, iter) {
+          return takeAllC(Lazy_filterLazy(f, iter));
+        }
+      );
       // CONCATENATED MODULE: ./Concurrency/objectC.js
 
       function objectC(iter) {
-        return Concurrency_reduceC((obj, [k, v]) => ((obj[k] = v), obj), {}, iter);
+        return Concurrency_reduceC(
+          (obj, [k, v]) => ((obj[k] = v), obj),
+          {},
+          iter
+        );
       }
       // CONCATENATED MODULE: ./Concurrency/callsC.js
 
-      /* harmony default export */ var callsC = baseCalls_0(Concurrency_mapC, objectC);
+      /* harmony default export */ var callsC = baseCalls_0(
+        Concurrency_mapC,
+        objectC
+      );
       // CONCATENATED MODULE: ./Concurrency/someC.js
 
-      /* harmony default export */ var Concurrency_someC = curry(function someC(f, iter) {
-        return go1(take1C(Lazy_filterLazy(f, iter)), ({ length }) => length == 1);
+      /* harmony default export */ var Concurrency_someC = curry(function someC(
+        f,
+        iter
+      ) {
+        return go1(
+          take1C(Lazy_filterLazy(f, iter)),
+          ({ length }) => length == 1
+        );
       });
       // CONCATENATED MODULE: ./C.js
 
@@ -1209,7 +1358,11 @@
       _.empty = empty;
       _.takeWhile = _.take_while = takeWhile_0;
       _.isMatch = _.is_match = isMatch_0;
-      _.mapEntries = _.map_entries = _.entriesMap = _.entries_map = mapEntries_0;
+      _.mapEntries =
+        _.map_entries =
+        _.entriesMap =
+        _.entries_map =
+          mapEntries_0;
       _.object = object_object;
       _.negate = negate;
       _.nop = nop_0;

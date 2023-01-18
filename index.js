@@ -53,4 +53,18 @@ function f2(limit, list) {
   );
 }
 
-f2(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+function f3(end) {
+  let i = 0;
+  while (i < end) {
+    console.log(i);
+    ++i;
+  }
+}
+// f3(10);
+
+function f4(end) {
+  _.each(console.log, L.range(1, end, 2)); // 홀수만 출력
+}
+f4(10);
+
+// f2(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
