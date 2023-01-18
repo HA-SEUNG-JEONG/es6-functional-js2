@@ -84,4 +84,17 @@ _.go(
   console.log
 );
 
+_.go(
+  L.range(2, 10),
+  L.map((a) =>
+    _.go(
+      L.range(1, 10),
+      L.map((b) => `${a}x${b}=${a * b}`),
+      join("\n")
+    )
+  ),
+  join("\n\n"),
+  console.log
+);
+
 // f2(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
