@@ -73,4 +73,15 @@ function f4(end) {
 }
 f4(10);
 
+const join = (sep = "") => _.reduce((a, b) => `${a}${sep}${b}`);
+
+_.go(
+  L.range(1, 6),
+  L.map(L.range),
+  L.map(L.map((_) => "*")),
+  L.map(join()),
+  join("\n"),
+  console.log
+);
+
 // f2(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
