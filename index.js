@@ -75,14 +75,25 @@ f4(10);
 
 const join = (sep = "") => _.reduce((a, b) => `${a}${sep}${b}`);
 
+// _.go(
+//   L.range(1, 6),
+//   L.map(L.range),
+//   L.map(L.map((_) => "*")),
+//   L.map(join()),
+//   join("\n"),
+//   console.log
+// );
+
 _.go(
-  L.range(1, 6),
-  L.map(L.range),
-  L.map(L.map((_) => "*")),
-  L.map(join()),
-  join("\n"),
+  _.range(2, 10),
+  _.map((a) =>
+    _.go(
+      _.range(1, 10),
+      _.map((b) => `${a}x${b}=${a * b}`)
+    )
+  ),
   console.log
-);
+); // [2,3,4,5,6,7,8,9]
 
 _.go(
   L.range(2, 10),
