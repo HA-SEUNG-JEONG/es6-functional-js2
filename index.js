@@ -15,7 +15,10 @@ function f1(limit, list) {
 
 const { L, C } = window._;
 
-const add = (acc, cur) => acc + cur;
+/* `// const add = (acc, cur) => acc + cur;` is defining a function called `add` that takes two
+arguments `acc` and `cur` and returns their sum. This function is later used in the `f2` function to
+calculate the sum of the squared odd numbers in a given list. */
+// const add = (acc, cur) => acc + cur;
 
 function f2(limit, list) {
   // [...,,,]로 즉시 평가
@@ -28,6 +31,7 @@ function f2(limit, list) {
   //     )
   //   ),
   // ]);
+
   console.log(
     _.reduce(
       add,
@@ -73,7 +77,7 @@ function f4(end) {
 }
 f4(10);
 
-const join = (sep = "") => _.reduce((a, b) => `${a}${sep}${b}`);
+const join = _.curry((sep = "") => _.reduce((a, b) => `${a}${sep}${b}`));
 
 // _.go(
 //   L.range(1, 6),
@@ -95,17 +99,136 @@ _.go(
   console.log
 ); // [2,3,4,5,6,7,8,9]
 
-_.go(
-  L.range(2, 10),
-  L.map((a) =>
-    _.go(
-      L.range(1, 10),
-      L.map((b) => `${a}x${b}=${a * b}`),
-      join("\n")
-    )
-  ),
-  join("\n\n"),
-  console.log
+// _.go(
+//   L.range(2, 10),
+//   L.map((a) =>
+//     _.go(
+//       L.range(1, 10),
+//       L.map((b) => `${a}x${b}=${a * b}`),
+//       join("\n")
+//     )
+//   ),
+//   join("\n\n"),
+//   console.log
+// );
+
+// f2(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);\
+
+console.clear();
+
+const users = [
+  { name: "AA", age: 35 },
+  { name: "BB", age: 26 },
+  { name: "CC", age: 28 },
+  { name: "DD", age: 34 },
+  { name: "EE", age: 23 },
+];
+
+// console.log(
+//   _.reduce(
+//     (total, u) => {
+//       return total + u.age;
+//     },
+//     0,
+//     users
+//   )
+// );
+
+// 기존 위 reduce 개선
+console.log(
+  _.reduce(
+    (a, b) => a + b,
+    L.map((u) => u.age, users)
+  )
 );
 
-// f2(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+// reduce 하나보다 map + filter + reduce
+
+console.log(
+  _.reduce((total, u) => (u.age < 30 ? total : total + u.age), 0, users)
+);
+
+const add = (a, b) => a + b;
+
+// 개선
+
+console.log(
+  _.reduce(
+    add,
+    _.map(
+      (u) => u.age,
+      _.filter((u) => u.age < 30, users)
+    )
+  )
+);
+
+// query,queryToObject
+
+const obj1 = {
+  a: 1,
+  b: undefined,
+  c: "CC",
+  d: "DD",
+};
+
+// a=1&c=CC&d=DD 출력해보기
+
+function query1(obj) {
+  let res = "";
+  for (const key in obj) {
+    const v = obj[key];
+    if (v === undefined) continue;
+    if (res !== "") res += "&";
+    res += key + "=" + v;
+  }
+  return res;
+}
+
+console.log(query1(obj1));
+
+function query2(obj) {
+  return Object.entries(obj).reduce((query, [k, v], i) => {
+    if (v === undefined) return query;
+    return `${query}${i > 0 ? "&" : ""}${k}${v}`;
+  }, "");
+}
+
+console.log(query2(obj1));
+
+const joinQuery = _.curry((sep, iter) =>
+  _.reduce((a, b) => `${a}${sep}${b}`, iter)
+);
+
+function query3(obj) {
+  return joinQuery(
+    "&",
+    _.map(
+      ([k, v]) => `${k}=${v}`,
+      _.reject(([k, v]) => v === undefined, Object.entries(obj))
+    )
+  );
+}
+
+console.log("query3", query3(obj1));
+
+const query4 = _.pipe(
+  Object.entries,
+  _.reject(([k, v]) => v === undefined),
+  _.map(joinQuery("=")),
+  joinQuery("&")
+);
+
+console.log("query4", query4(obj1));
+
+// queryToObject
+
+const split = _.curry((sep, str) => str.split(sep));
+
+const queryToObject = _.pipe(
+  split("&"),
+  _.map(split("=")),
+  _.map(([k, v]) => ({ [k]: v })),
+  _.reduce(Object.assign)
+);
+
+console.log(queryToObject("a=1&c=CC&d=DD"));
