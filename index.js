@@ -232,3 +232,45 @@ const queryToObject = _.pipe(
 );
 
 console.log(queryToObject("a=1&c=CC&d=DD"));
+
+// 안전한 합성
+
+const f = (x) => x + 10;
+const g = (x) => x - 5;
+
+const fg = (x) => f(g(x));
+
+console.log(fg(10));
+
+//만약 fg에 아무것도 없다면?
+// console.log(fg()); // NaN
+
+// 아무것도 없을 때도 오류 없이 처리 필요
+
+_.go(10, fg, console.log);
+
+_.go([], L.map(fg), _.each(console.log));
+
+// find 대신 L.filter
+
+const user1 = _.find((u) => u.name === "BB", users);
+
+// 없는 객체를 찾으려고 하면 undefined
+const user2 = _.find((u) => u.name === "BBD", users);
+
+// L.filter 사용
+
+_.each(
+  console.log,
+  L.take(
+    1,
+    L.filter((u) => u.name === "BB", users)
+  )
+);
+
+_.go(
+  users,
+  L.filter((u) => u.name === "BB"),
+  L.take(1),
+  _.each(console.log)
+);
